@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcryptjs from "bcryptjs"
+import { ApiError } from "../utils/apiError";
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -25,6 +27,23 @@ const userSchema = new mongoose.Schema({
         default: "",
     },
 }, {timestamps: true});
+
+
+userSchema.pre("save", async function(req, res, next){
+    if(!this.isModified("password")){
+        return next();
+    }
+
+    this.password = await bcryptjs.hash(this.password, 10);
+    next();
+})
+
+userSchema.methods.isPassword = async function(req, res, next){
+    if(!password || !this.password){
+        throw ApiError(400, "Cannot match your password");
+    }
+    return await bcryptjs.compare(password, this.password);
+}
 
 const User = mongoose.model("User", userSchema);
 
