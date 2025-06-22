@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs"
 import { ApiError } from "../utils/apiError";
+import jwt from "jsonwebtoken"
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -43,6 +44,14 @@ userSchema.methods.isPassword = async function(req, res, next){
         throw ApiError(400, "Cannot match your password");
     }
     return await bcryptjs.compare(password, this.password);
+}
+
+userSchema.methods.generateAccessToken = async function(req, res){
+    return jwt.sign(
+        {_id: this._id},
+        process.env.ACCESS_TOKEN_SECRET,
+        {expiresIn: process.env.ACCESS_TOKEN_EXPIRY}
+    )
 }
 
 const User = mongoose.model("User", userSchema);
