@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs"
-import { ApiError } from "../utils/apiError";
+import { ApiError } from "../utils/apiError.js";
 import jwt from "jsonwebtoken"
 
 const userSchema = new mongoose.Schema({
@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 
-userSchema.pre("save", async function(req, res, next){
+userSchema.pre("save", async function(next){
     if(!this.isModified("password")){
         return next();
     }
@@ -39,14 +39,14 @@ userSchema.pre("save", async function(req, res, next){
     next();
 })
 
-userSchema.methods.isPassword = async function(req, res, next){
+userSchema.methods.isPassword = async function(password){
     if(!password || !this.password){
-        throw ApiError(400, "Cannot match your password");
+        throw new ApiError(400, "Cannot match your password");
     }
     return await bcryptjs.compare(password, this.password);
 }
 
-userSchema.methods.generateAccessToken = async function(req, res){
+userSchema.methods.generateAccessToken = async function(){
     return jwt.sign(
         {_id: this._id},
         process.env.ACCESS_TOKEN_SECRET,
