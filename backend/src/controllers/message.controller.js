@@ -20,6 +20,23 @@ const getAllUsers = asyncHandler(async (req, res) => {
     )
 })
 
+const getMessages = asyncHandler(async (req, res) => {
+    const myId = req.user._id;
+    const personToChatId = req.params;
+
+    const messages = await Message.find({
+        $or: [
+            {senderId: myId, receiverId: personToChatId},
+            {senderId: personToChatId, receiverId: myId}
+        ]
+    })
+
+    return res.status(200).json(
+        new ApiResponse(200, messages, "")
+    )
+})
+
 export {
      getAllUsers,
+     getMessages,
 }
