@@ -2,6 +2,12 @@ import React from "react"
 import Navbar from './components/Navbar'
 import { Routes, Route } from "react-router-dom"
 
+import SignUpPage from "./pages/SignUpPage"
+import LoginPage from "./pages/LoginPage"
+import ProfilePage from "./pages/ProfilePage"
+import SettingsPage from "./pages/SettingsPage"
+import HomePage from "./pages/HomePage"
+
 
 const App = () => {
   return (
