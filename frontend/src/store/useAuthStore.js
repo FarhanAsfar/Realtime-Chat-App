@@ -20,7 +20,7 @@ const useAuthStore = create((set) => ({
             console.log("Check auth error", error);
             set({authUser: null}); 
         } finally{
-            set({authUser: false});  
+            set({isCheckingAuth: false});  
         }
     },
 
