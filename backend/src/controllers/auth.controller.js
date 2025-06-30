@@ -118,9 +118,20 @@ const SignOut = asyncHandler(async (req, res) => {
     )
 })
 
+const checkAuth = asyncHandler(async(req, res) =>{
+    const user = req.user;
+
+    if(!user){
+        throw new ApiError(400, "CheckAuth controller error");
+    }
+
+    return res.status(200).json(user);
+})
+
 
 export{
     SignUp,
     SignIn,
     SignOut,
+    checkAuth,
 }
