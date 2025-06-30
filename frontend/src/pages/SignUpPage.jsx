@@ -4,6 +4,8 @@ import { Eye, EyeOff, Loader, Loader2, Lock, Mail, MessageSquare, User } from "l
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
 
+import toast from "react-hot-toast"
+
 const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -15,7 +17,12 @@ const SignUpPage = () => {
     const {signUp, isSigningUp} = useAuthStore();
 
     const validateForm = () => {
-
+        if(!formData.fullName.trim()){
+            return toast.error("Full name is required");
+        }
+        if(!formData.email.trim()){
+            return toast.error("Email is required");
+        }
     }
 
     const handleSubmit = (e) => {
