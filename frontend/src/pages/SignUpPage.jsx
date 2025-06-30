@@ -23,10 +23,29 @@ const SignUpPage = () => {
         if(!formData.email.trim()){
             return toast.error("Email is required");
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email.trim())) {
+            return toast.error("Please enter a valid email address");
+        }
+
+        if(!formData.password){
+            return toast.error("Password is required");
+        }
+        if(formData.password.length<6){
+            return toast.error("Password must be atleast 6 characters");
+        }
+
+        return true;
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const success = validateForm();
+
+        if(success == true){
+            signUp(formData);
+        }
     }
 
     return (
