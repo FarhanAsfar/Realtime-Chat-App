@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuthStore from "../store/useAuthStore";
-import { Camera, Mail, User } from "lucide-react";
+import { Camera, LoaderPinwheel, Mail, User } from "lucide-react";
+import AuthImagePattern from "../components/AuthImagePattern";
 
 const ProfilePage = () => {
-    const {authUser, isUpdatingProfile, updateProfile} = useAuthStore();
+    const {authUser, isCheckingAuth, isUpdatingProfile, updateProfile, checkAuth} = useAuthStore();
 
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -23,6 +24,18 @@ const ProfilePage = () => {
             await updateProfile({ profilePic: base64Image});
         }
     }
+
+    useEffect(() => {
+        checkAuth();
+    },[checkAuth]);
+
+  if(isCheckingAuth && !authUser){
+    return(
+      <div className="flex items-center justify-center h-screen">
+        <LoaderPinwheel className="size-10 animate-spin"></LoaderPinwheel>
+      </div>
+    )
+  }
 
     return (
     <div className="h-screen pt-20">
