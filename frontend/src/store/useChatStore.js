@@ -22,7 +22,22 @@ const useChatStore = craete((set) => ({
         } finally{
             set({isUserLoading: false})
         }
-    }
+    },
+
+    getMessages: async(userId) => {
+        set({isMessageLoading: true});
+
+        try {
+            const res = await axiosInstance.get(`/message/${userId}`);
+            set({message: res.data})
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({isMessageLoading: false});
+        }
+    },
+
+    
 }))
 
 export default useChatStore;
