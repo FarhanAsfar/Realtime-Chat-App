@@ -3,8 +3,8 @@ import toast from "react-hot-toast"
 import {axiosInstance} from "../lib/axios"
 
 
-const useChatStore = craete((set) => ({
-    message: [],
+const useChatStore = create((set) => ({
+    messages: [],
     users: [],
     selectedUser: null,
     isUserLoading: false,
@@ -14,11 +14,41 @@ const useChatStore = craete((set) => ({
         set({isUserLoading: true});
 
         try {
-            const res = await axiosInstance.get("/messages/users");
+            const res = await axiosInstance.get("/message/users");
+
+            set({users: res.data});
         } catch (error) {
             toast.error(error.response.data.message);
         } finally{
             set({isUserLoading: false})
         }
-    }
+    },
+
+    getMessages: async(userId) => {
+        set({isMessageLoading: true});
+
+        try {
+            const res = await axiosInstance.get(`/message/${userId}`);
+            set({message: res.data})
+        } catch (error) {
+            toast.error(error.response.data.message);
+        } finally {
+            set({isMessageLoading: false});
+        }
+    },
+
+    // sendMessage: async (messageData) => {
+    //     const {selectedUser, messages} = get();
+
+    //     try {
+    //         const res = await axiosInstance.post(`/message/send/${selectedUser._id}`, messageData);
+
+    //         set({messages: [...messages, res.data]});
+    //     } catch (error) {
+    //         toast.error(error.response.data.message);
+    //     }
+    // },
+
 }))
+
+export default useChatStore;
