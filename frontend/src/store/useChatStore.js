@@ -1,6 +1,6 @@
 import {create} from "zustand"
 import toast from "react-hot-toast"
-import {axiosInstance} from "../lib/axios"
+import  axiosInstance  from "../lib/axios"
 
 
 const useChatStore = create((set) => ({
@@ -15,8 +15,8 @@ const useChatStore = create((set) => ({
 
         try {
             const res = await axiosInstance.get("/message/users");
-
-            set({users: res.data});
+            console.log(res.data);
+            set({users: res.data.data.filteredUsers});
         } catch (error) {
             toast.error(error.response.data.message);
         } finally{
@@ -48,6 +48,10 @@ const useChatStore = create((set) => ({
     //         toast.error(error.response.data.message);
     //     }
     // },
+
+    setSelectedUser: (selectedUser) => {
+         set({selectedUser})
+    }
 
 }))
 
