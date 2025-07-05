@@ -27,7 +27,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         checkAuth();
-    },[checkAuth]);
+    },[checkAuth, authUser]);
 
   if(isCheckingAuth && !authUser){
     return(
