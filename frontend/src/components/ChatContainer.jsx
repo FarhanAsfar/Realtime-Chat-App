@@ -3,6 +3,8 @@ import useChatStore from "../store/useChatStore";
 import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import useAuthStore from "../store/useAuthStore";
+import formatMessageTime from "../lib/utils"
+import { useRef } from "react";
 
 const ChatContainer = () => {
     const {messages, getMessages, isMessageLoading, selectedUser} = useChatStore();
