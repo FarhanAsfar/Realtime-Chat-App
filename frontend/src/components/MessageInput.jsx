@@ -9,7 +9,31 @@ const MessageInput = () => {
   const fileInputRef = useRef(null);
   const { sendMessage } = useChatStore();
 
-  
+  const handleSendMessage = async(e) => {
+    e.preventDefault();
+
+    if(!text.trim() && !imagePreview){
+        return;
+    }
+
+    try {
+        await sendMessage({
+            text: text.trim(),
+            image: imagePreview,
+        });
+        
+        //clear form
+        setText("");
+        setImagePreview(null);
+        if(fileInputRef.current){
+            fileInputRef.current.value = "";
+        }
+        
+    } catch (error) {
+        console.error("Failed to send message", error);
+    }
+  }
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
