@@ -23,7 +23,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 
 const getMessages = asyncHandler(async (req, res) => {
     const myId = req.user._id;
-    const personToChatId = req.params;
+    const personToChatId = req.params.id;
 
     const messages = await Message.find({
         $or: [
@@ -41,7 +41,7 @@ const getMessages = asyncHandler(async (req, res) => {
 const sendMessages = asyncHandler(async (req, res) => {
     const {text, image} = req.body;
     const senderId = req.user._id;
-    const receiverId = req.params;
+    const receiverId = req.params.id;
 
     let imageURL;
 
