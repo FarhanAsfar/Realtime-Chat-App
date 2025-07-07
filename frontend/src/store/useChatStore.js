@@ -29,7 +29,7 @@ const useChatStore = create((set, get) => ({
 
         try {
             const res = await axiosInstance.get(`/message/${userId}`);
-            set({message: res.data})
+            set({messages: res.data.data})
         } catch (error) {
             toast.error(error.response.data.message);
         } finally {
@@ -43,7 +43,7 @@ const useChatStore = create((set, get) => ({
         try {
             const res = await axiosInstance.post(`/message/send/${selectedUser._id}`, messageData);
 
-            set({messages: [...messages, res.data]});
+            set({messages: [...messages, res.data.data]});
         } catch (error) {
             toast.error(error.response.data.message);
         }
