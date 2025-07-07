@@ -28,7 +28,7 @@ const MessageInput = () => {
         if(fileInputRef.current){
             fileInputRef.current.value = "";
         }
-        
+
     } catch (error) {
         console.error("Failed to send message", error);
     }
@@ -51,7 +51,11 @@ const MessageInput = () => {
   }
 
   const removeImage = () => {
+    setImagePreview(null);
 
+    if(fileInputRef.current){
+        fileInputRef.current.value = "";
+    }
   }
 
   return (
