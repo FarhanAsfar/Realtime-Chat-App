@@ -5,9 +5,8 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import { authRouter } from "./routes/auth.route.js";
 import { userRouter } from "./routes/user.route.js";
 import { messageRouter } from "./routes/message.route.js";
+import { app, server } from "./utils/socket.js";
 
-
-const app = express();
 
 app.use(cors({
     origin: "http://localhost:5173",
