@@ -22,6 +22,7 @@ const useAuthStore = create((set, get) => ({
             const res = await axiosInstance.get("/auth/check");
 
             set({authUser: res.data})
+            // console.log("authStore:",res.data);
             //Connect to socketio when user is authenticated
             get().connectSocket();
         } catch (error) {
