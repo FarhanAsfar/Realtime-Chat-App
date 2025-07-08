@@ -91,7 +91,7 @@ const useAuthStore = create((set, get) => ({
     },
 
     connectSocket: () => {
-
+        
     },
 
     disconnectSocket: () => {
