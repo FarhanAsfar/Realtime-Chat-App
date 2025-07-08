@@ -4,7 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 import { cloudinary } from "../utils/cloudinary.js";
-import { getReceiverSocketId } from "../utils/socket.js";
+import { getReceiverSocketId, io } from "../utils/socket.js";
 
 
 const getAllUsers = asyncHandler(async (req, res) => {
