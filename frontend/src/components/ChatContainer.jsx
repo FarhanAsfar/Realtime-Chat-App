@@ -19,6 +19,12 @@ const ChatContainer = () => {
     return ()=> unsubscribeFromMessages();
   }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
+  useEffect(() => {
+    if(messageEndRef.current && messages){
+      messageEndRef.current.scrollIntoView({behavior: "smooth"})
+    }
+  },[messages])
+  
   if (isMessageLoading) {
     return <div>Loading Messages...</div>;
   }
