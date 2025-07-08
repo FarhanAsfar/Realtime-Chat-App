@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { connectDatabase } from "./db/index.js";
-import { app, server } from "../src/utils/socket.js";
+import { server } from "../src/utils/socket.js";
 
 connectDatabase()
 .then(() => {
