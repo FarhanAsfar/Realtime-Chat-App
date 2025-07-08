@@ -15,7 +15,7 @@ const useChatStore = create((set, get) => ({
 
         try {
             const res = await axiosInstance.get("/message/users");
-            console.log(res.data);
+            // console.log(res.data);
             set({users: res.data.data.filteredUsers});
         } catch (error) {
             toast.error(error.response.data.message);
