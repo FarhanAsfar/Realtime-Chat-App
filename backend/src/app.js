@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser";
@@ -5,8 +8,10 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import { authRouter } from "./routes/auth.route.js";
 import { userRouter } from "./routes/user.route.js";
 import { messageRouter } from "./routes/message.route.js";
-import { server } from "./utils/socket.js";
 
+import path from "path";
+
+const __dirname = path.resolve();
 const app = express();
 
 app.use(cors({
@@ -24,5 +29,13 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/message", messageRouter);
 
 app.use(errorHandler)
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "../frontend/dist")))
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+    })
+}
 
 export {app}
